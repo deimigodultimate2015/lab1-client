@@ -1,0 +1,30 @@
+
+<div class="container ">
+  <h3 class="text-primary">Student list</h3>
+  <button type="button" class="btn btn-primary" (click)="newStudent()">New student</button>
+  <div *ngIf="students; else notice">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Mark</th>
+        <th>Major</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students | async">
+        <td>{{student.id}}</td>
+        <td>{{student.name}}</td>
+        <td>{{student.mark}}</td>
+        <td>{{student.major}}</td>
+        <td><button class="btn btn-success" [routerLink]="['/student/edit', student.id]">Details</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #notice>
+    <h4>Nothing to show right now</h4>
+  </ng-template>
+</div>

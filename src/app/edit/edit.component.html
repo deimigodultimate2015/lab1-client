@@ -1,0 +1,38 @@
+<div class="container center-div">
+  <div class="row col-sm-10" style="max-width: 500px">
+    <h3 class="text-primary">Edit student information</h3>
+    <div [hidden]="submitted">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <label for="name">Student name</label>
+        <div class="form-group">
+          <input type="text" class="form-control" name="name" value="{{student.name}}" [(ngModel)]="student.name" #name="ngModel" required>
+          <div class="text-danger" *ngIf="f.submitted && name.invalid">
+            <div *ngIf="name.errors.required">Name is required</div>
+          </div>
+        </div>
+        <label for="mark">Mark</label>
+        <div class="form-group">
+          <input type="text" class="form-control" name="mark" value="{{student.mark}}" [(ngModel)]="student.mark" #mark="ngModel" required pattern="((\+|-)?([0-9]+)(\.[0-9]+)?)|((\+|-)?\.?[0-9]+)">
+          <div class="text-danger" *ngIf="f.submitted && mark.invalid">
+            <div *ngIf="mark.errors.required">Mark is required</div>
+            <div *ngIf="mark.errors.pattern">Mark must be a number</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="major">Major</label>
+          <label class="radio-inline" *ngFor="let major of majors"><input type="radio" name="major" [(ngModel)]="student.major" value="{{major}}">{{major}}</label>
+          <div class="text-danger" *ngIf="f.submitted && !student.major">
+            Major must be selected
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-danger" (click)="btnDelete()">Delete</button>
+        <button type="button" class="btn btn-secondary" (click)="btnCancel()">Cancel</button>
+      </form>
+    </div>
+    <div [hidden]="!submitted">
+      {{messenger}}
+      <button type="button" class="btn btn-secondary" (click)="btnCancel()">Return to list</button>
+    </div>
+  </div>
+</div>

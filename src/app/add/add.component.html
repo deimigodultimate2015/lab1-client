@@ -1,0 +1,37 @@
+<div class="container">
+  <h3 class="text-primary">Add student</h3>
+  <div [hidden]="submitted" style="width: 350px; align-content: center">
+    <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="name">Student name</label><br/>
+        <input type="text" class="form-control" name="name" [(ngModel)]="student.name" #name="ngModel" required>
+        <div *ngIf="f.submitted && name.invalid" class="text-danger">
+          <div *ngIf="name.errors.required">Name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mark">Mark</label><br/>
+        <input type="text" class="form-control" name="mark" [(ngModel)]="student.mark" #mark="ngModel" required pattern="((\+|-)?([0-9]+)(\.[0-9]+)?)|((\+|-)?\.?[0-9]+)">
+        <div *ngIf="f.submitted && f.invalid" class="text-danger">
+          <div *ngIf="mark.errors.required">Mark is required</div>
+          <div *ngIf="mark.errors.pattern">Mark must be a number</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="major">Major</label><br/>
+        <label class="radio-inline" *ngFor="let major of majors"><input type="radio" [(ngModel)]="student.major" name="major" value="{{major}}" [checked]="major == 'ITer'">{{major}}</label>
+        <div class="text-danger" *ngIf="f.submitted && !student.major">
+          Please select your major
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="btnCancel()">Cancel</button>
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h4 class="text-success"> Student was added </h4>
+    <button class="btn btn-primary" (click)="newStudent()">Add new student</button>
+    <button class="btn btn-secondary" (click)="btnCancel()">Return to list</button>
+  </div>
+</div>
